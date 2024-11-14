@@ -5,6 +5,8 @@ import Logo from './Logo'
 import { FaSearch } from "react-icons/fa";
 import { IoBagAddSharp } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+/* router import */
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -33,7 +35,7 @@ const Header = () => {
       <div className="text-3xl relative"><span><IoBagAddSharp /></span>
       <p className='text-lg bg-green-800 text-center rounded-full absolute -right-3 -top-3 w-7 text-white'>0</p></div>
 
-      <button className='border-4 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-950 text-xl'>Login</button>
+      <Link to="/loginpage"><button className='border-4 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-950 text-xl'>Login</button></Link>
     </div>
     
   </div>
