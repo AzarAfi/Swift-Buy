@@ -5,6 +5,7 @@ import profilelogo from "../assest/signin.gif";
 /* import icon */
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import imgupload from '../helper/imgupload';
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +14,8 @@ const Signin = () => {
     email: "",
     password: "",
     name:"",
-    conformPassword:""
+    conformPassword:"",
+    profilepic:""
   });
 
   // Handle input changes
@@ -24,12 +26,22 @@ const Signin = () => {
       [name]: value,
     }));
   };
-  console.log("hello makkale",data)
+  const handleUplodFile = async (e) =>{
+    const file= e.target.files[0]
+    const imgpic=await imgupload(file)
+
+    setData((prev)=>{
+    return  {
+        ...prev,
+        profilepic:imgpic
+      }
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted", data);
-    // Handle the login logic (e.g., API call here)
+   
   };
 
   return (
@@ -37,13 +49,35 @@ const Signin = () => {
       <form className='w-full sm:w-96 md:w-1/3 border-4 border-gray-300 bg-white rounded-lg shadow-lg p-8 flex flex-col items-center'
         onSubmit={handleSubmit}>
 
-        <h1 className='text-3xl font-semibold text-center text-gray-800 mb-6'>
-          Signin Page
-        </h1>
+<h1 className='text-3xl font-semibold text-center text-gray-800 mb-6'>
+  Signin Page
+</h1>
 
+<div className='relative text-center rounded-full overflow-hidden'>
+  <div>
+    <img 
+      src={data.profilepic||profilelogo} 
+      alt="Profile Logo" 
+      className='w-32 mb-6 rounded-full' 
+    />
+  </div>
 
-        <img src={profilelogo} alt="Profile Logo" className='w-32 mb-6' />
+  <div className='relative'>
+    <label 
+      htmlFor="file-upload" 
+      className='text-sm absolute bottom-8 bg-slate-500 p-3 w-full bg-opacity-20 cursor-pointer right-1'
+    >
+      Upload Image
+    </label>
 
+    <input 
+      id="file-upload" 
+      type="file" 
+      className='absolute bottom-8 right-0 opacity-0 cursor-pointer'
+      onChange={handleUplodFile} 
+    />
+  </div>
+</div>
 
         
         <div className='w-full space-y-4'>
@@ -142,10 +176,10 @@ const Signin = () => {
         </div>
 
         <p className='mt-4 text-center text-gray-600 text-sm'>
-          you have already account
+          you have already account</p>
           <Link to="/loginpage"><p className='text-blue-600 hover:underline'>login</p></Link>
           
-        </p>
+        
       </form>
     </main>
   )
